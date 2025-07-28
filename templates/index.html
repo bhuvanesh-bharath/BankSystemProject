@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Admin Panel</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        /* Custom scrollbar for better aesthetics */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #e2e8f0; /* bg-gray-200 */
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8; /* bg-gray-400 */
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b; /* bg-gray-500 */
+        }
+        /* Hide scrollbar for specific elements if needed */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex text-gray-800">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-gray-900 text-white p-6 flex flex-col shadow-lg rounded-r-xl">
+        <div class="text-2xl font-bold mb-8 text-indigo-400">Bank Admin</div>
+        <nav class="flex-grow">
+            <ul>
+                <li class="mb-4">
+                    <a href="#" class="nav-link block py-2 px-4 rounded-lg hover:bg-gray-700 transition duration-200 ease-in-out flex items-center group active-link" data-section="dashboard">
+                        <svg class="w-5 h-5 mr-3 text-indigo-300 group-[.active-link]:text-indigo-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+                        Dashboard
+                    </a>
+                </li>
+                <li class="mb-4">
+                    <a href="#" class="nav-link block py-2 px-4 rounded-lg hover:bg-gray-700 transition duration-200 ease-in-out flex items-center group" data-section="user-management">
+                        <svg class="w-5 h-5 mr-3 text-indigo-300 group-[.active-link]:text-indigo-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                        User Management
+                    </a>
+                </li>
+                <li class="mb-4">
+                    <a href="#" class="nav-link block py-2 px-4 rounded-lg hover:bg-gray-700 transition duration-200 ease-in-out flex items-center group" data-section="account-management">
+                        <svg class="w-5 h-5 mr-3 text-indigo-300 group-[.active-link]:text-indigo-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                        Account Management
+                    </a>
+                </li>
+                <li class="mb-4">
+                    <a href="#" class="nav-link block py-2 px-4 rounded-lg hover:bg-gray-700 transition duration-200 ease-in-out flex items-center group" data-section="transaction-history">
+                        <svg class="w-5 h-5 mr-3 text-indigo-300 group-[.active-link]:text-indigo-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                        Transaction History
+                    </a>
+                </li>
+                <li class="mb-4">
+                    <a href="#" class="nav-link block py-2 px-4 rounded-lg hover:bg-gray-700 transition duration-200 ease-in-out flex items-center group" data-section="audit-logs">
+                        <svg class="w-5 h-5 mr-3 text-indigo-300 group-[.active-link]:text-indigo-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        Audit Logs
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <div class="mt-auto pt-6 border-t border-gray-700 text-sm text-gray-400">
+            Admin User: John Doe <br>
+            Version: 1.0.0
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 p-8 overflow-y-auto">
+        <header class="mb-8">
+            <h1 class="text-4xl font-extrabold text-gray-900 leading-tight">Admin Panel</h1>
+            <p class="text-gray-600 mt-2">Manage all banking operations efficiently.</p>
+        </header>
+
+        <!-- Loading Indicator -->
+        <div id="loading-indicator" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div class="bg-white p-6 rounded-lg shadow-xl flex items-center">
+                <div class="w-8 h-8 border-4 border-t-4 border-blue-500 border-solid rounded-full animate-spin mr-3"></div>
+                <p class="text-lg font-medium">Loading...</p>
+            </div>
+        </div>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="content-section">
+            <h2 class="text-3xl font-bold mb-6 text-gray-900">Dashboard Overview</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div class="bg-white p-6 rounded-lg shadow-md flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-500 text-sm">Total Customers</p>
+                        <p id="total-customers" class="text-3xl font-bold text-gray-900 mt-1"></p>
+                    </div>
+                    <svg class="w-12 h-12 text-indigo-400 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H2v-2a3 3 0 015.356-1.857m14 1.857V10a3 3 0 00-3-3H6a3 3 0 00-3 3v10M9 12h6m-6 4h6"></path></svg>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-500 text-sm">Total Accounts</p>
+                        <p id="total-accounts" class="text-3xl font-bold text-gray-900 mt-1"></p>
+                    </div>
+                    <svg class="w-12 h-12 text-blue-400 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path></svg>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-500 text-sm">Transactions Today</p>
+                        <p id="transactions-today" class="text-3xl font-bold text-gray-900 mt-1"></p>
+                    </div>
+                    <svg class="w-12 h-12 text-green-400 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-500 text-sm">Total Deposits</p>
+                        <p id="total-deposits" class="text-3xl font-bold text-gray-900 mt-1"></p>
+                    </div>
+                    <svg class="w-12 h-12 text-emerald-400 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2v2.219a2 2 0 00.5 1.5l1.5 1.5H8.28a2 2 0 00-1.724 1.051L6 21H3V9.284C3 8.35 3.352 7.505 3.999 6.877L16.999 6.877M12 8a3 3 0 100-6 3 3 0 000 6z"></path></svg>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-500 text-sm">Total Withdrawals</p>
+                        <p id="total-withdrawals" class="text-3xl font-bold text-gray-900 mt-1"></p>
+                    </div>
+                    <svg class="w-12 h-12 text-red-400 opacity-70" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2v2.219a2 2 0 00.5 1.5l1.5 1.5H8.28a2 2 0 00-1.724 1.051L6 21H3V9.284C3 8.35 3.352 7.505 3.999 6.877L16.999 6.877M12 8a3 3 0 100-6 3 3 0 000 6z"></path></svg>
+                </div>
+            </div>
+        </section>
+
+        <!-- User Management Section -->
+        <section id="user-management" class="content-section hidden">
+            <h2 class="text-3xl font-bold mb-6 text-gray-900">User Management</h2>
+            <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-4 gap-4">
+                    <div class="w-full md:w-1/2 relative">
+                        <input type="text" id="user-search" placeholder="Search users by name, email, or ID..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-200">
+                        <svg class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
+                    <button id="add-user-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg shadow-md transition duration-200 w-full md:w-auto">Add New User</button>
+                </div>
+
+                <div class="overflow-x-auto rounded-lg border border-gray-200">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User ID</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Role</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="user-table-body" class="bg-white divide-y divide-gray-200">
+                            <!-- User rows will be dynamically inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Account Management Section -->
+        <section id="account-management" class="content-section hidden">
+            <h2 class="text-3xl font-bold mb-6 text-gray-900">Account Management</h2>
+            <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-4 gap-4">
+                    <div class="w-full md:w-1/2 relative">
+                        <input type="text" id="account-search" placeholder="Search accounts by number, customer name..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-200">
+                        <svg class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto rounded-lg border border-gray-200">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Account No.</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer Name</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Balance</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="account-table-body" class="bg-white divide-y divide-gray-200">
+                            <!-- Account rows will be dynamically inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Transaction History Section -->
+        <section id="transaction-history" class="content-section hidden">
+            <h2 class="text-3xl font-bold mb-6 text-gray-900">Transaction History</h2>
+            <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+                    <div>
+                        <label for="transaction-filter-type" class="block text-sm font-medium text-gray-700">Type</label>
+                        <select id="transaction-filter-type" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                            <option value="">All</option>
+                            <option value="Deposit">Deposit</option>
+                            <option value="Withdrawal">Withdrawal</option>
+                            <option value="Transfer">Transfer</option>
+                            <option value="Deposit (Adjustment)">Deposit (Adjustment)</option>
+                            <option value="Withdrawal (Adjustment)">Withdrawal (Adjustment)</option>
+                            <option value="Deposit (Reversal)">Deposit (Reversal)</option>
+                            <option value="Withdrawal (Reversal)">Withdrawal (Reversal)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="transaction-filter-start-date" class="block text-sm font-medium text-gray-700">Start Date</label>
+                        <input type="date" id="transaction-filter-start-date" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
+                    <div>
+                        <label for="transaction-filter-end-date" class="block text-sm font-medium text-gray-700">End Date</label>
+                        <input type="date" id="transaction-filter-end-date" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
+                    <div>
+                        <label for="transaction-filter-account" class="block text-sm font-medium text-gray-700">Account No.</label>
+                        <input type="text" id="transaction-filter-account" placeholder="Enter account number" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
+                </div>
+                <button id="apply-transaction-filters" class="bg-indigo-500 hover:bg-indigo-600 text-white font-medium py-2 px-4 rounded-lg shadow-md transition duration-200 mb-4">Apply Filters</button>
+
+                <div class="overflow-x-auto rounded-lg border border-gray-200">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TXN ID</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date/Time</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Account No.</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                                <th scope="col" class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transaction-table-body" class="bg-white divide-y divide-gray-200">
+                            <!-- Transaction rows will be dynamically inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Audit Logs Section -->
+        <section id="audit-logs" class="content-section hidden">
+            <h2 class="text-3xl font-bold mb-6 text-gray-900">Audit Logs</h2>
+            <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+                <div class="flex flex-col md:flex-row justify-between items-center mb-4 gap-4">
+                    <div class="w-full md:w-1/2 relative">
+                        <input type="text" id="audit-log-search" placeholder="Search logs by action or admin..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500 transition duration-200">
+                        <svg class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto rounded-lg border border-gray-200">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Log ID</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date/Time</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Admin User</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Details</th>
+                            </tr>
+                        </thead>
+                        <tbody id="audit-log-table-body" class="bg-white divide-y divide-gray-200">
+                            <!-- Audit log rows will be dynamically inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modals -->
+
+        <!-- Generic Confirmation Modal -->
+        <div id="confirmation-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 p-4">
+            <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
+                <h3 id="confirmation-modal-title" class="text-xl font-semibold mb-4 text-gray-900">Confirm Action</h3>
+                <p id="confirmation-modal-body" class="mb-6 text-gray-700">Are you sure you want to perform this action?</p>
+                <div class="flex justify-end space-x-4">
+                    <button id="confirmation-cancel-btn" class="px-6 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100 transition duration-200">Cancel</button>
+                    <button id="confirmation-confirm-btn" class="px-6 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition duration-200">Confirm</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Generic Message Modal -->
+        <div id="message-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 p-4">
+            <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
+                <h3 id="message-modal-title" class="text-xl font-semibold mb-4 text-gray-900">Message</h3>
+                <p id="message-modal-body" class="mb-6 text-gray-700"></p>
+                <div class="flex justify-end">
+                    <button id="message-modal-close-btn" class="px-6 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition duration-200">Close</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add/Edit User Modal -->
+        <div id="user-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 p-4">
+            <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-lg">
+                <h3 id="user-modal-title" class="text-xl font-semibold mb-6 text-gray-900">Add New User</h3>
+                <form id="user-form">
+                    <input type="hidden" id="user-id-field">
+                    <div class="mb-4">
+                        <label for="user-name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                        <input type="text" id="user-name" name="name" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <div class="mb-4">
+                        <label for="user-email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                        <input type="email" id="user-email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <div class="mb-4">
+                        <label for="user-password" class="block text-sm font-medium text-gray-700 mb-1">Password (Leave blank to keep current)</label>
+                        <input type="password" id="user-password" name="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <div class="mb-4">
+                        <label for="user-role" class="block text-sm font-medium text-gray-700 mb-1">Role</label>
+                        <select id="user-role" name="role" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
+                            <option value="Customer">Customer</option>
+                            <option value="Staff">Staff</option>
+                            <option value="Admin">Admin</option>
+                        </select>
+                    </div>
+                    <div id="initial-balance-group" class="mb-4">
+                        <label for="initial-balance" class="block text-sm font-medium text-gray-700 mb-1">Initial Account Balance (for new customers)</label>
+                        <input type="number" id="initial-balance" name="initialBalance" min="0" step="0.01" value="0" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
+                    </div>
+                    <div class="flex justify-end space-x-4 mt-6">
+                        <button type="button" id="cancel-user-modal" class="px-6 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100 transition duration-200">Cancel</button>
+                        <button type="submit" class="px-6 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition duration-200">Save User</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Account Adjust Balance Modal -->
+        <div id="adjust-balance-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 p-4">
+            <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
+                <h3 class="text-xl font-semibold mb-6 text-gray-900">Adjust Account Balance</h3>
+                <form id="adjust-balance-form">
+                    <input type="hidden" id="adjust-account-id">
+                    <p class="mb-4 text-gray-700">Account: <span id="adjust-account-number-display" class="font-medium"></span> (<span id="adjust-customer-name-display" class="font-medium"></span>)</p>
+                    <div class="mb-4">
+                        <label for="adjust-amount" class="block text-sm font-medium text-gray-700 mb-1">Amount to Adjust ($)</label>
+                        <input type="number" id="adjust-amount" name="amount" step="0.01" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
+                        <p class="text-sm text-gray-500 mt-1">Use negative value to decrease balance.</p>
+                    </div>
+                    <div class="mb-4">
+                        <label for="adjust-reason" class="block text-sm font-medium text-gray-700 mb-1">Reason for Adjustment</label>
+                        <textarea id="adjust-reason" name="reason" rows="3" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500"></textarea>
+                    </div>
+                    <div class="flex justify-end space-x-4 mt-6">
+                        <button type="button" id="cancel-adjust-balance-modal" class="px-6 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-100 transition duration-200">Cancel</button>
+                        <button type="submit" class="px-6 py-2 rounded-lg bg-indigo-600 text-white hover:bg-indigo-700 transition duration-200">Apply Adjustment</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- View Account Details Modal (Transactions for specific account) -->
+        <div id="account-details-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50 p-4">
+            <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-semibold text-gray-900">Transactions for Account: <span id="account-details-number"></span></h3>
+                    <button id="close-account-details-modal" class="text-gray-500 hover:text-gray-700">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+                <div class="mb-4">
+                    <p class="text-gray-700"><span class="font-medium">Customer Name:</span> <span id="account-details-customer-name"></span></p>
+                    <p class="text-gray-700"><span class="font-medium">Current Balance:</span> <span id="account-details-balance" class="font-bold"></span></p>
+                </div>
+                <div class="overflow-x-auto rounded-lg border border-gray-200">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th scope="col" class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">TXN ID</th>
+                                <th scope="col" class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date/Time</th>
+                                <th scope="col" class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
+                                <th scope="col" class="px-4 py-2 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                                <th scope="col" class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                <th scope="col" class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody id="account-details-transactions-body" class="bg-white divide-y divide-gray-200">
+                            <!-- Transactions for this account will be dynamically inserted here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // --- DOM Elements ---
+        const contentSections = document.querySelectorAll('.content-section');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const loadingIndicator = document.getElementById('loading-indicator');
+
+        // Modals
+        const confirmationModal = document.getElementById('confirmation-modal');
+        const confirmationModalTitle = document.getElementById('confirmation-modal-title');
+        const confirmationModalBody = document.getElementById('confirmation-modal-body');
+        const confirmationCancelBtn = document.getElementById('confirmation-cancel-btn');
+        const confirmationConfirmBtn = document.getElementById('confirmation-confirm-btn');
+
+        const messageModal = document.getElementById('message-modal');
+        const messageModalTitle = document.getElementById('message-modal-title');
+        const messageModalBody = document.getElementById('message-modal-body');
+        const messageModalCloseBtn = document.getElementById('message-modal-close-btn');
+
+        const userModal = document.getElementById('user-modal');
+        const userModalTitle = document.getElementById('user-modal-title');
+        const userForm = document.getElementById('user-form');
+        const userIdField = document.getElementById('user-id-field');
+        const userNameField = document.getElementById('user-name');
+        const userEmailField = document.getElementById('user-email');
+        const userPasswordField = document.getElementById('user-password');
+        const userRoleField = document.getElementById('user-role');
+        const initialBalanceGroup = document.getElementById('initial-balance-group');
+        const initialBalanceField = document.getElementById('initial-balance');
+        const cancelUserModalBtn = document.getElementById('cancel-user-modal');
+
+        const adjustBalanceModal = document.getElementById('adjust-balance-modal');
+        const adjustBalanceForm = document.getElementById('adjust-balance-form');
+        const adjustAccountIdField = document.getElementById('adjust-account-id');
+        const adjustAccountNumberDisplay = document.getElementById('adjust-account-number-display');
+        const adjustCustomerNameDisplay = document.getElementById('adjust-customer-name-display');
+        const adjustAmountField = document.getElementById('adjust-amount');
+        const adjustReasonField = document.getElementById('adjust-reason');
+        const cancelAdjustBalanceModalBtn = document.getElementById('cancel-adjust-balance-modal');
+
+        const accountDetailsModal = document.getElementById('account-details-modal');
+        const accountDetailsNumber = document.getElementById('account-details-number');
+        const accountDetailsCustomerName = document.getElementById('account-details-customer-name');
+        const accountDetailsBalance = document.getElementById('account-details-balance');
+        const accountDetailsTransactionsBody = document.getElementById('account-details-transactions-body');
+        const closeAccountDetailsModalBtn = document.getElementById('close-account-details-modal');
+
+
+        // --- Utility Functions ---
+
+        function showLoading() {
+            loadingIndicator.classList.remove('hidden');
+        }
+
+        function hideLoading() {
+            loadingIndicator.classList.add('hidden');
+        }
+
+        function showConfirmationModal(title, message, onConfirm) {
+            confirmationModalTitle.textContent = title;
+            confirmationModalBody.textContent = message;
+            confirmationModal.classList.remove('hidden');
+
+            const handleConfirm = () => {
+                onConfirm();
+                confirmationModal.classList.add('hidden');
+                confirmationConfirmBtn.removeEventListener('click', handleConfirm);
+                confirmationCancelBtn.removeEventListener('click', handleCancel);
+            };
+
+            const handleCancel = () => {
+                confirmationModal.classList.add('hidden');
+                confirmationConfirmBtn.removeEventListener('click', handleConfirm);
+                confirmationCancelBtn.removeEventListener('click', handleCancel);
+            };
+
+            confirmationConfirmBtn.addEventListener('click', handleConfirm);
+            confirmationCancelBtn.addEventListener('click', handleCancel);
+        }
+
+        function showMessageModal(title, message) {
+            messageModalTitle.textContent = title;
+            messageModalBody.textContent = message;
+            messageModal.classList.remove('hidden');
+        }
+
+        function hideMessageModal() {
+            messageModal.classList.add('hidden');
+        }
+
+        // --- Navigation Logic ---
+        function showSection(sectionId) {
+            contentSections.forEach(section => {
+                section.classList.add('hidden');
+            });
+            document.getElementById(sectionId).classList.remove('hidden');
+
+            navLinks.forEach(link => {
+                link.classList.remove('active-link', 'bg-indigo-700', 'font-semibold');
+                link.classList.add('text-white');
+            });
+
+            const activeLink = document.querySelector(`.nav-link[data-section="${sectionId}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active-link', 'bg-indigo-700', 'font-semibold');
+                activeLink.classList.remove('text-white');
+            }
+
+            // Trigger rendering for the active section
+            if (sectionId === 'dashboard') updateDashboardMetrics();
+            if (sectionId === 'user-management') renderUsers();
+            if (sectionId === 'account-management') renderAccounts();
+            if (sectionId === 'transaction-history') renderTransactions();
+            if (sectionId === 'audit-logs') renderAuditLogs();
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const sectionId = e.currentTarget.dataset.section;
+                showSection(sectionId);
+            });
+        });
+
+        // --- Dashboard Logic ---
+        async function updateDashboardMetrics() {
+            showLoading();
+            try {
+                const response = await fetch('/api/dashboard');
+                if (!response.ok) throw new Error('Failed to fetch dashboard data');
+                const data = await response.json();
+
+                document.getElementById('total-customers').textContent = data.totalCustomers;
+                document.getElementById('total-accounts').textContent = data.totalAccounts;
+                document.getElementById('transactions-today').textContent = data.transactionsToday;
+                document.getElementById('total-deposits').textContent = `$${data.totalDeposits.toFixed(2)}`;
+                document.getElementById('total-withdrawals').textContent = `$${data.totalWithdrawals.toFixed(2)}`;
+            } catch (error) {
+                console.error('Error updating dashboard metrics:', error);
+                showMessageModal('Error', 'Failed to load dashboard data. Please try again.');
+            } finally {
+                hideLoading();
+            }
+        }
+
+
+        // --- User Management Logic ---
+        const userTableBody = document.getElementById('user-table-body');
+        const addUserBtn = document.getElementById('add-user-btn');
+        const userSearchInput = document.getElementById('user-search');
+
+        async function renderUsers(filterText = '') {
+            showLoading();
+            try {
+                const response = await fetch(`/api/users?search=${encodeURIComponent(filterText)}`);
+                if (!response.ok) throw new Error('Failed to fetch users');
+                const users = await response.json();
+
+                userTableBody.innerHTML = '';
+                if (users.length === 0) {
+                    userTableBody.innerHTML = `<tr><td colspan="6" class="px-6 py-4 text-center text-gray-500">No users found.</td></tr>`;
+                    return;
+                }
+
+                users.forEach(user => {
+                    const row = userTableBody.insertRow();
+                    row.className = 'hover:bg-gray-50';
+                    row.innerHTML = `
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${user.id}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${user.name}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${user.email}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${user.role}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${user.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                                ${user.status}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                            <button onclick="editUser('${user.id}')" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</button>
+                            <button onclick="toggleUserStatus('${user.id}', '${user.status}')" class="${user.status === 'Active' ? 'text-yellow-600 hover:text-yellow-900' : 'text-green-600 hover:text-green-900'} mr-3">
+                                ${user.status === 'Active' ? 'Deactivate' : 'Activate'}
+                            </button>
+                            <button onclick="deleteUser('${user.id}')" class="text-red-600 hover:text-red-900">Delete</button>
+                        </td>
+                    `;
+                });
+            } catch (error) {
+                console.error('Error rendering users:', error);
+                showMessageModal('Error', 'Failed to load user data. Please try again.');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        userSearchInput.addEventListener('keyup', (e) => {
+            renderUsers(e.target.value);
+        });
+
+        addUserBtn.addEventListener('click', () => {
+            userModalTitle.textContent = 'Add New User';
+            userForm.reset();
+            userIdField.value = ''; // Clear ID for new user
+            userPasswordField.required = true; // Password is required for new user
+            initialBalanceGroup.classList.remove('hidden'); // Show for new user
+            userModal.classList.remove('hidden');
+        });
+
+        cancelUserModalBtn.addEventListener('click', () => {
+            userModal.classList.add('hidden');
+            userForm.reset();
+        });
+
+        userRoleField.addEventListener('change', (e) => {
+            if (e.target.value === 'Customer') {
+                initialBalanceGroup.classList.remove('hidden');
+            } else {
+                initialBalanceGroup.classList.add('hidden');
+                initialBalanceField.value = '0';
+            }
+        });
+
+        userForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            showLoading();
+            const id = userIdField.value;
+            const name = userNameField.value.trim();
+            const email = userEmailField.value.trim();
+            const password = userPasswordField.value;
+            const role = userRoleField.value;
+            const initialBalance = parseFloat(initialBalanceField.value);
+
+            if (!name || !email || (id === '' && !password)) {
+                showMessageModal('Error', 'Please fill in all required fields (Name, Email, and Password for new users).');
+                hideLoading();
+                return;
+            }
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showMessageModal('Error', 'Please enter a valid email address.');
+                hideLoading();
+                return;
+            }
+
+            const userData = { name, email, role };
+            if (password) {
+                userData.password = password;
+            }
+            if (role === 'Customer' && !id) { // Only send initial balance for new customers
+                userData.initial_balance = initialBalance;
+            }
+
+            try {
+                let response;
+                if (id) {
+                    // Edit existing user
+                    response = await fetch(`/api/users/${id}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(userData)
+                    });
+                } else {
+                    // Add new user
+                    response = await fetch('/api/users', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(userData)
+                    });
+                }
+
+                const result = await response.json();
+                if (!response.ok) throw new Error(result.error || 'Operation failed');
+
+                showMessageModal('Success', result.message);
+                userModal.classList.add('hidden');
+                userForm.reset();
+                await renderUsers(userSearchInput.value); // Re-render with current filter
+                await updateDashboardMetrics(); // Update dashboard after user/account changes
+                await renderAccounts(accountSearchInput.value); // Also re-render accounts in case new one was created
+                await renderTransactions(); // Re-render transactions if initial funding happened
+            } catch (error) {
+                console.error('Error saving user:', error);
+                showMessageModal('Error', error.message || 'An unexpected error occurred.');
+            } finally {
+                hideLoading();
+            }
+        });
+
+        async function editUser(userId) {
+            showLoading();
+            try {
+                const response = await fetch(`/api/users/${userId}`);
+                if (!response.ok) throw new Error('Failed to fetch user data');
+                const user = await response.json();
+
+                userModalTitle.textContent = `Edit User: ${user.name}`;
+                userIdField.value = user.id;
+                userNameField.value = user.name;
+                userEmailField.value = user.email;
+                userRoleField.value = user.role;
+                userPasswordField.value = ''; // Clear password field for editing, don't pre-fill
+                userPasswordField.required = false; // Not required for edit unless user types
+                initialBalanceGroup.classList.add('hidden'); // Hide for existing user
+                userModal.classList.remove('hidden');
+            } catch (error) {
+                console.error('Error editing user:', error);
+                showMessageModal('Error', 'Failed to load user data for editing.');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        async function toggleUserStatus(userId, currentStatus) {
+            const newStatus = currentStatus === 'Active' ? 'Inactive' : 'Active';
+            showConfirmationModal(
+                'Confirm Status Change',
+                `Are you sure you want to change status of user ${userId} to ${newStatus}?`,
+                async () => {
+                    showLoading();
+                    try {
+                        const response = await fetch(`/api/users/${userId}/toggle_status`, {
+                            method: 'PUT',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ status: newStatus })
+                        });
+                        const result = await response.json();
+                        if (!response.ok) throw new Error(result.error || 'Operation failed');
+
+                        showMessageModal('Success', result.message);
+                        await renderUsers(userSearchInput.value);
+                    } catch (error) {
+                        console.error('Error toggling user status:', error);
+                        showMessageModal('Error', error.message || 'An unexpected error occurred.');
+                    } finally {
+                        hideLoading();
+                    }
+                }
+            );
+        }
+
+        async function deleteUser(userId) {
+            showConfirmationModal(
+                'Confirm Deletion',
+                `Are you sure you want to delete user ${userId}? This action cannot be undone and will delete associated accounts!`,
+                async () => {
+                    showLoading();
+                    try {
+                        const response = await fetch(`/api/users/${userId}`, {
+                            method: 'DELETE'
+                        });
+                        const result = await response.json();
+                        if (!response.ok) throw new Error(result.error || 'Operation failed');
+
+                        showMessageModal('Success', result.message);
+                        await renderUsers(userSearchInput.value);
+                        await renderAccounts(accountSearchInput.value);
+                        await renderTransactions();
+                        await updateDashboardMetrics();
+                    } catch (error) {
+                        console.error('Error deleting user:', error);
+                        showMessageModal('Error', error.message || 'An unexpected error occurred.');
+                    } finally {
+                        hideLoading();
+                    }
+                }
+            );
+        }
+
+        // --- Account Management Logic ---
+        const accountTableBody = document.getElementById('account-table-body');
+        const accountSearchInput = document.getElementById('account-search');
+
+        async function renderAccounts(filterText = '') {
+            showLoading();
+            try {
+                const response = await fetch(`/api/accounts?search=${encodeURIComponent(filterText)}`);
+                if (!response.ok) throw new Error('Failed to fetch accounts');
+                const accounts = await response.json();
+
+                accountTableBody.innerHTML = '';
+                if (accounts.length === 0) {
+                    accountTableBody.innerHTML = `<tr><td colspan="6" class="px-6 py-4 text-center text-gray-500">No accounts found.</td></tr>`;
+                    return;
+                }
+
+                accounts.forEach(account => {
+                    const row = accountTableBody.insertRow();
+                    row.className = 'hover:bg-gray-50';
+                    row.innerHTML = `
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${account.account_number}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${account.customer_name}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${account.account_type}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">$${account.balance.toFixed(2)}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${account.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">
+                                ${account.status}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                            <button onclick="viewAccountDetails('${account.id}')" class="text-blue-600 hover:text-blue-900 mr-3">View Details</button>
+                            <button onclick="openAdjustBalanceModal('${account.id}')" class="text-purple-600 hover:text-purple-900">Adjust Balance</button>
+                        </td>
+                    `;
+                });
+            } catch (error) {
+                console.error('Error rendering accounts:', error);
+                showMessageModal('Error', 'Failed to load account data. Please try again.');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        accountSearchInput.addEventListener('keyup', (e) => {
+            renderAccounts(e.target.value);
+        });
+
+        async function openAdjustBalanceModal(accountId) {
+            showLoading();
+            try {
+                const response = await fetch(`/api/accounts/${accountId}`);
+                if (!response.ok) throw new Error('Failed to fetch account data');
+                const account = await response.json();
+
+                adjustAccountIdField.value = account.id;
+                adjustAccountNumberDisplay.textContent = account.account_number;
+                adjustCustomerNameDisplay.textContent = account.customer_name;
+                adjustAmountField.value = '';
+                adjustReasonField.value = '';
+                adjustBalanceModal.classList.remove('hidden');
+            } catch (error) {
+                console.error('Error opening adjust balance modal:', error);
+                showMessageModal('Error', 'Failed to load account data for adjustment.');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        cancelAdjustBalanceModalBtn.addEventListener('click', () => {
+            adjustBalanceModal.classList.add('hidden');
+            adjustBalanceForm.reset();
+        });
+
+        adjustBalanceForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            showLoading();
+            const accountId = adjustAccountIdField.value;
+            const amount = parseFloat(adjustAmountField.value);
+            const reason = adjustReasonField.value.trim();
+
+            if (isNaN(amount) || !reason) {
+                showMessageModal('Error', 'Please enter a valid amount and reason.');
+                hideLoading();
+                return;
+            }
+
+            try {
+                const response = await fetch(`/api/accounts/${accountId}/adjust_balance`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ amount, reason })
+                });
+                const result = await response.json();
+                if (!response.ok) throw new Error(result.error || 'Operation failed');
+
+                showMessageModal('Success', result.message);
+                adjustBalanceModal.classList.add('hidden');
+                adjustBalanceForm.reset();
+                await renderAccounts(accountSearchInput.value);
+                await renderTransactions();
+                await updateDashboardMetrics();
+            } catch (error) {
+                console.error('Error adjusting balance:', error);
+                showMessageModal('Error', error.message || 'An unexpected error occurred.');
+            } finally {
+                hideLoading();
+            }
+        });
+
+        async function viewAccountDetails(accountId) {
+            showLoading();
+            try {
+                const accountResponse = await fetch(`/api/accounts/${accountId}`);
+                if (!accountResponse.ok) throw new Error('Failed to fetch account details');
+                const account = await accountResponse.json();
+
+                const transactionsResponse = await fetch(`/api/transactions?account_id=${accountId}`);
+                if (!transactionsResponse.ok) throw new Error('Failed to fetch account transactions');
+                const accountTransactions = await transactionsResponse.json();
+
+                accountDetailsNumber.textContent = account.account_number;
+                accountDetailsCustomerName.textContent = account.customer_name;
+                accountDetailsBalance.textContent = `$${account.balance.toFixed(2)}`;
+
+                accountDetailsTransactionsBody.innerHTML = '';
+                if (accountTransactions.length === 0) {
+                    accountDetailsTransactionsBody.innerHTML = `<tr><td colspan="6" class="px-4 py-2 text-center text-gray-500">No transactions found for this account.</td></tr>`;
+                } else {
+                    accountTransactions.forEach(txn => {
+                        const row = accountDetailsTransactionsBody.insertRow();
+                        row.className = 'hover:bg-gray-50';
+                        const amountClass = txn.type.includes('Deposit') ? 'text-green-600' : 'text-red-600';
+                        row.innerHTML = `
+                            <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">${txn.id}</td>
+                            <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">${new Date(txn.transaction_date).toLocaleString()}</td>
+                            <td class="px-4 py-2 whitespace-nowrap text-sm text-gray-700">${txn.type}</td>
+                            <td class="px-4 py-2 whitespace-nowrap text-sm text-right font-medium ${amountClass}">${txn.type.includes('Withdrawal') ? '-' : ''}$${txn.amount.toFixed(2)}</td>
+                            <td class="px-4 py-2 whitespace-nowrap text-sm">
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${txn.status === 'Completed' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}">
+                                    ${txn.status}
+                                </span>
+                            </td>
+                            <td class="px-4 py-2 text-sm text-gray-700 max-w-xs truncate">${txn.description}</td>
+                        `;
+                    });
+                }
+                accountDetailsModal.classList.remove('hidden');
+            } catch (error) {
+                console.error('Error viewing account details:', error);
+                showMessageModal('Error', 'Failed to load account details or transactions.');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        closeAccountDetailsModalBtn.addEventListener('click', () => {
+            accountDetailsModal.classList.add('hidden');
+        });
+
+        // --- Transaction History Logic ---
+        const transactionTableBody = document.getElementById('transaction-table-body');
+        const transactionFilterType = document.getElementById('transaction-filter-type');
+        const transactionFilterStartDate = document.getElementById('transaction-filter-start-date');
+        const transactionFilterEndDate = document.getElementById('transaction-filter-end-date');
+        const transactionFilterAccount = document.getElementById('transaction-filter-account');
+        const applyTransactionFiltersBtn = document.getElementById('apply-transaction-filters');
+
+
+        async function renderTransactions() {
+            showLoading();
+            try {
+                const filterType = transactionFilterType.value;
+                const filterStartDate = transactionFilterStartDate.value;
+                const filterEndDate = transactionFilterEndDate.value;
+                const filterAccount = transactionFilterAccount.value.trim();
+
+                const queryParams = new URLSearchParams();
+                if (filterType) queryParams.append('type', filterType);
+                if (filterStartDate) queryParams.append('start_date', filterStartDate);
+                if (filterEndDate) queryParams.append('end_date', filterEndDate);
+                if (filterAccount) queryParams.append('search', filterAccount);
+
+                const response = await fetch(`/api/transactions?${queryParams.toString()}`);
+                if (!response.ok) throw new Error('Failed to fetch transactions');
+                const transactions = await response.json();
+
+                transactionTableBody.innerHTML = '';
+                if (transactions.length === 0) {
+                    transactionTableBody.innerHTML = `<tr><td colspan="9" class="px-6 py-4 text-center text-gray-500">No transactions found matching your criteria.</td></tr>`;
+                    return;
+                }
+
+                transactions.forEach(txn => {
+                    const row = transactionTableBody.insertRow();
+                    row.className = 'hover:bg-gray-50';
+                    const amountClass = txn.type.includes('Withdrawal') || txn.type.includes('Reversal') && txn.type.includes('Deposit') ? 'text-red-600' : 'text-green-600';
+                    const displayAmount = txn.type.includes('Withdrawal') ? `-$${txn.amount.toFixed(2)}` : `$${txn.amount.toFixed(2)}`;
+
+                    row.innerHTML = `
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${txn.id}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${new Date(txn.transaction_date).toLocaleString()}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${txn.account_number}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${txn.customer_name}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${txn.type}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-right font-medium ${amountClass}">${displayAmount}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${txn.status === 'Completed' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}">
+                                ${txn.status}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-700 max-w-xs truncate">${txn.description}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                            ${txn.status === 'Completed' && !txn.type.includes('Reversal') && !txn.type.includes('Adjustment') ? `<button onclick="reverseTransaction('${txn.id}')" class="text-orange-600 hover:text-orange-900">Reverse</button>` : 'N/A'}
+                        </td>
+                    `;
+                });
+            } catch (error) {
+                console.error('Error rendering transactions:', error);
+                showMessageModal('Error', 'Failed to load transaction data. Please try again.');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        applyTransactionFiltersBtn.addEventListener('click', renderTransactions);
+
+        async function reverseTransaction(transactionId) {
+            showLoading();
+            try {
+                const response = await fetch(`/api/transactions/${transactionId}`);
+                if (!response.ok) throw new Error('Failed to fetch transaction details for reversal');
+                const transaction = await response.json();
+
+                if (transaction.status !== 'Completed') {
+                    showMessageModal('Error', 'Only "Completed" transactions can be reversed.');
+                    hideLoading();
+                    return;
+                }
+                if (transaction.type.includes('Reversal') || transaction.type.includes('Adjustment')) {
+                     showMessageModal('Error', 'Cannot reverse a reversal or adjustment transaction.');
+                     hideLoading();
+                     return;
+                }
+
+                showConfirmationModal(
+                    'Confirm Transaction Reversal',
+                    `Are you sure you want to reverse Transaction ID ${transactionId} (Amount: $${transaction.amount.toFixed(2)}, Type: ${transaction.type})? This will affect the account balance.`,
+                    async () => {
+                        showLoading();
+                        try {
+                            const reverseResponse = await fetch(`/api/transactions/${transactionId}/reverse`, {
+                                method: 'PUT'
+                            });
+                            const result = await reverseResponse.json();
+                            if (!reverseResponse.ok) throw new Error(result.error || 'Operation failed');
+
+                            showMessageModal('Success', result.message);
+                            await renderTransactions();
+                            await renderAccounts(accountSearchInput.value);
+                            await updateDashboardMetrics();
+                        } catch (error) {
+                            console.error('Error reversing transaction:', error);
+                            showMessageModal('Error', error.message || 'An unexpected error occurred during reversal.');
+                        } finally {
+                            hideLoading();
+                        }
+                    }
+                );
+            } catch (error) {
+                console.error('Error preparing for reversal:', error);
+                showMessageModal('Error', 'Failed to prepare transaction reversal. Please try again.');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        // --- Audit Logs Logic ---
+        const auditLogTableBody = document.getElementById('audit-log-table-body');
+        const auditLogSearchInput = document.getElementById('audit-log-search');
+
+        async function renderAuditLogs(filterText = '') {
+            showLoading();
+            try {
+                const response = await fetch(`/api/audit_logs?search=${encodeURIComponent(filterText)}`);
+                if (!response.ok) throw new Error('Failed to fetch audit logs');
+                const auditLogs = await response.json();
+
+                auditLogTableBody.innerHTML = '';
+                if (auditLogs.length === 0) {
+                    auditLogTableBody.innerHTML = `<tr><td colspan="5" class="px-6 py-4 text-center text-gray-500">No audit logs found.</td></tr>`;
+                    return;
+                }
+
+                auditLogs.forEach(log => {
+                    const row = auditLogTableBody.insertRow();
+                    row.className = 'hover:bg-gray-50';
+                    row.innerHTML = `
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${log.id}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${new Date(log.timestamp).toLocaleString()}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${log.admin_user}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">${log.action_type}</td>
+                        <td class="px-6 py-4 text-sm text-gray-700">${log.action_details}</td>
+                    `;
+                });
+            } catch (error) {
+                console.error('Error rendering audit logs:', error);
+                showMessageModal('Error', 'Failed to load audit logs. Please try again.');
+            } finally {
+                hideLoading();
+            }
+        }
+
+        auditLogSearchInput.addEventListener('keyup', (e) => {
+            renderAuditLogs(e.target.value);
+        });
+
+
+        // --- Event Listeners for Modals ---
+        messageModalCloseBtn.addEventListener('click', hideMessageModal);
+
+
+        // --- Initial Load ---
+        document.addEventListener('DOMContentLoaded', () => {
+            showSection('dashboard'); // Default view
+        });
+
+    </script>
+</body>
+</html>
